@@ -2,6 +2,7 @@ import requests
 import datetime
 import os
 import json
+import subprocess
 
 #library import for using multithreading
 import concurrent.futures
@@ -60,7 +61,10 @@ def get_access_token(code):
 		response_access_token = response['data'].json()
 		access_token = response_access_token["access_token"]
 		# print (access_token)
-		os.putenv('teika_access_token', access_token)
+		env = dict(os.environ)
+		ansrun='/share/ansa/NOT_RELEASED/14.2.2/ansa64.sh'
+		env['teika_access_token'] = str(access_token)
+		subprocess.Popen(ansrun, shell=True, env=env)
 		print ("******************", os.environ.get('teika_client_id'))
 
 		header['Authorization'] = 'token {}'.format(access_token)
@@ -102,7 +106,9 @@ def get_commit_from_repo(repo):
 	url_user_repo_commits = "https://api.github.com/repos/{}/{}/commits".format(owner, repo)
 
 	params = dict()
-	params["author"] = "vipul1993"
+	url_user_username = "https://api.github.com/user"
+	response_user_username = api_call(url_user_username, header={'Authorization': 'token {}'.format(os.environ.get('teika_access_token'))})
+	params["author"] = response_user_username['login']
 
 	response_commits = api_call(url_user_repo_commits, params=params, header=global_header).json()
 	len_response_commits = len(response_commits)
@@ -173,7 +179,6 @@ def main():
 				len_response_repos -= 5
 				i += 5
 	except Exception as exc:
-		print (exc)
 		return ({
 			"success":False,
 			"error": exc
@@ -191,12 +196,14 @@ def main():
 # API for finding the top 10 recent commits.
 
 def top_10_recent_commits(request):
-	import pdb; pdb.set_trace()
+	# import pdb; pdb.set_trace()
+	print (os.environ.get('teika_access_token'))
+	# access_token = str(os.environ._data[b'teika_access_token'])
 	access_token = os.environ.get('teika_access_token')
 	
 	if access_token is not None and access_token is not '':
 		result = main()
-		if result['success'] == True:
+		if result['success'] is True:
 
 			all_commits = result['all_commits']
 			no_of_commits = result['no_of_commits'] 
