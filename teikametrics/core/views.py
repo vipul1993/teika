@@ -65,7 +65,7 @@ def get_access_token(code):
 		ansrun='/share/ansa/NOT_RELEASED/14.2.2/ansa64.sh'
 		env['teika_access_token'] = str(access_token)
 		subprocess.Popen(ansrun, shell=True, env=env)
-		print ("******************", os.environ.get('teika_client_id'))
+		# print ("******************", os.environ.get('teika_client_id'))
 
 		header['Authorization'] = 'token {}'.format(access_token)
 		return ({
@@ -129,7 +129,7 @@ def main():
 
 	header = dict()
 
-	access_token = os.environ.get('teika_access_token')
+	access_token = os.environ.get('teika_access_token',)
 
 	header['Authorization'] = "token {}".format(access_token)
 
