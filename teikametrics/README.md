@@ -43,17 +43,24 @@ To set up the project, follow the following steps:
 9.) Now run the command:
 	pip install -r requirements.txt
 
-10.) Now run the following command in the browser:
+10.) Open the file startup.sh in the current folder. 
+	i.) Change the "****your_client_id****" to your_client_id
+	ii.) Change the "****your_client_secret****" to your_client_secret
+	iii.) Now open your terminal and run the following command:
+		. ./startup.sh 
+	NOTE: make sure your client_secret, client_id and an empty string gets printed in the terminal.	  	
+
+11.) Now run the following command in the browser:
 	i.) python manage.py makemigrations.
 	ii.) python manage.py migrate
 	iii.) python manage.py runserver	
 
-11.) Now make sure your django server is running properly.	
+12.) Now make sure your django server is running properly.	
 
-12.) Now go to your browser and type the following url:
+13.) Now go to your browser and type the following url:
 	https://github.com/login/oauth/authorize?client_id=****your-client-id****&scope=repo
 	NOTE: Replace ****your-client-id**** in above url with your client_id.
 
-13.) On hitting the above Url you need to enter your github username and password in the prompt (if you are not 	logged in github earlier) and then authorize the app to use your credentials.
+14.) On hitting the above Url you need to enter your github username and password in the prompt (if you are not 	logged in github earlier) and then authorize the app to use your credentials.
 
-14.) Now hit any of the above urls (mentioned in Section (i)) and get the desired result.
+15.) Now hit any of the above urls (mentioned in Section (i)) and get the desired result.
